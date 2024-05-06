@@ -45,7 +45,7 @@ window.onload = function () {
             new Plato("Croquetas de jamón", "Croquetas caseras de jamón ibérico", 7.50, ["Gluten", "Lácteos"]),
             new Plato("Nachos", "Nachos con guacamole", 10.50, ["Lácteos"]),
             new Plato("Patatas", "Patatas con huevo y jamon", 15.99, ["Huevos"])
-            
+
         ]),
         new Categoria("Platos principales", [
             new Plato("Paella de marisco", "Paella con mariscos frescos", 15.99, ["Crustáceos"]),
@@ -96,27 +96,27 @@ window.onload = function () {
         new Restaurante("Restaurante 3", [
             menus[2]
         ]),
-        
+
     ];
     cargarContenidoInicial(categorias, alergenos, menus, restaurantes);
 }
 
-        // Función para cargar el contenido inicial
-        function cargarContenidoInicial(categorias) {
-            const contenido = document.getElementById('contenido');
-            const menu = document.getElementById('menu');
+// Función para cargar el contenido inicial
+function cargarContenidoInicial(categorias) {
+    const contenido = document.getElementById('contenido');
+    const menu = document.getElementById('menu');
 
-            // Limpiar contenido y menú
-            contenido.innerHTML = '';
-            menu.innerHTML = '<li><a href="#" id="inicio">Inicio</a></li>';
+    // Limpiar contenido y menú
+    contenido.innerHTML = '';
+    menu.innerHTML = '<li><a href="#" id="inicio">Inicio</a></li>';
 
-            // Agregar enlaces al menú
-            categorias.forEach(categoria => {
-                const categoriaId = categoria.nombre.replace(/\s+/g, '-').toLowerCase(); // Convertir nombre de categoría en ID
-                menu.innerHTML += `<li><a href="#${categoriaId}">${categoria.nombre}</a></li>`;
+    // Agregar enlaces al menú
+    categorias.forEach(categoria => {
+        const categoriaId = categoria.nombre.replace(/\s+/g, '-').toLowerCase(); // Convertir nombre de categoría en ID
+        menu.innerHTML += `<li><a href="#${categoriaId}">${categoria.nombre}</a></li>`;
 
-                // Agregar categoría al contenido
-                contenido.innerHTML += `
+        // Agregar categoría al contenido
+        contenido.innerHTML += `
                     <section id="${categoriaId}">
                         <h2>${categoria.nombre}</h2>
                         <ul>
@@ -124,11 +124,11 @@ window.onload = function () {
                         </ul>
                     </section>
                 `;
-            });
+    });
 
-            // Agregar evento al enlace de inicio
-            document.getElementById('inicio').addEventListener('click', function (event) {
-                event.preventDefault();
-                cargarContenidoInicial(categorias);
-            });
-        }
+    // Agregar evento al enlace de inicio
+    document.getElementById('inicio').addEventListener('click', function (event) {
+        event.preventDefault();
+        cargarContenidoInicial(categorias);
+    });
+}
