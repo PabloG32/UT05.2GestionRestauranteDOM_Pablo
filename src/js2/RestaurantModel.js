@@ -898,7 +898,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             //Devuelve un objeto Menu si está registrado, o crea un nuevo.
             createMenu(name, description = "") {
                 let position = this.#getMenuPosition(name);
-                if (position != -1) return this.#menus[position];
+                if (position != -1) return this.#menus[position].menu;
                 return new Menu(name, description);
             }
 
@@ -1037,7 +1037,7 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
             //Devuelve un objeto Allergen si está registrado, o crea un nuevo.
             createAllergen(name, description = "") {
                 let position = this.#getAllergenPosition(name);
-                if (position != -1) return this.#allergenes[position];
+                if (position != -1) return this.#allergenes[position].allergen;
                 return new Allergen(name, description);
             }
 
