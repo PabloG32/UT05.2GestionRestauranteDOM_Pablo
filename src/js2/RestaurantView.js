@@ -1,13 +1,14 @@
 class RestauranteView {
     constructor() {
         this.main = document.getElementsByTagName('main')[0];
-        //this.categories = document.getElementById('categories');
         this.categoriesMenu = document.getElementById('categories-menu');
         this.allergenesMenu = document.getElementById('allergenes-menu');
         this.menusMenu = document.getElementById('menus-menu');
         this.restaurantsMenu = document.getElementById('restaurants-menu');
         this.dishesMenu = document.getElementById('dishes-menu');
         this.categories = document.getElementById('cat-centro');
+        this.dishes = document.getElementById('platos-centro');
+        this.restaurantsCentral = document.getElementById('restaurantsCentral');
 
     }
 
@@ -128,6 +129,21 @@ class RestauranteView {
         }
     }
 
+    // showRestaurantsCentral(restaurants) {
+    //     this.main.replaceChildren();
+    //     for (const restaurant of restaurants) {
+    //         this.restaurantsMenu.insertAdjacentHTML('beforeend', `<li><a data-restaurants="${restaurant.name}" class="dropdown-item" href="#">${restaurant.name}</a></li>`)
+    //     }
+    // }
+
+    // bindRestaurantsCentral(handler) {
+    //     for (const div of this.restaurantsCentral.children) {
+    //         div.firstElementChild.addEventListener('click', (event) => {
+    //             handler(event.currentTarget.dataset.restaurant);
+    //         });
+    //     }
+    // }
+
     //Platos
     showDishesMenu(dishes) {
         this.dishesMenu.replaceChildren();
@@ -139,6 +155,60 @@ class RestauranteView {
     bindDishesMenu(handler) {
         for (const li of this.dishesMenu.children) {
             li.firstElementChild.addEventListener('click', (event) => {
+                handler(event.currentTarget.dataset.dish);
+            });
+        }
+    }
+
+    showDishes(dishes) {
+        this.dishes.replaceChildren();
+        for (const dish of dishes) {
+            this.dishes.insertAdjacentHTML('beforeend', `
+            <div class="col">
+            <div class="card shadow-sm">
+            <img src="${dish.image}" alt="${dish.name}">
+                <div class="card-body">
+                <p class="card-text">${dish.name}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#info${dish.name}">Ver</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+            </div>
+            <!-- Modal info -->
+        <div class="modal fade" id="info${dish.name}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" id="modalHeader">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">${dish.name}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+                        <p>
+                            Nombre: ${dish.name}
+                            <br><br>
+                            Descripción: ${dish.description}
+                            <br><br>
+                            Ingredientes: ${dish.ingredients}
+                            <br><br>
+                            Imagen: <img src="${dish.image}" alt="${dish.name}" width="200px" height="140px">
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!--Fin modal-->
+        `)
+        }
+    }
+
+    bindDishes(handler) {
+        for (const div of this.dishes.children) {
+            div.firstElementChild.addEventListener('click', (event) => {
                 handler(event.currentTarget.dataset.dish);
             });
         }
