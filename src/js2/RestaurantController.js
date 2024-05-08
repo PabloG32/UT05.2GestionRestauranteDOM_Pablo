@@ -164,6 +164,7 @@ class RestaurantController {
 
     handlerShowRestaurant = (name) => {
         const restaurant = this[MODEL].createRestaurant(name);
+        this[VIEW].showRestaurants(restaurant);
     }
 
     handlerShowDish = (name) => {

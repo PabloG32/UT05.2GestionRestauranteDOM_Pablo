@@ -110,11 +110,28 @@ class RestauranteView {
     }
 
     bindRestaurantsMenu(handler) {
-        for (const li of this.restaurantsMenu.children) {
-            li.firstElementChild.addEventListener('click', (event) => {
-                handler(event.currentTarget.dataset.restaurant);
+        for (const a of this.restaurantsMenu.children) {
+            a.firstElementChild.addEventListener('click', (event) => {
+                handler(event.currentTarget.dataset.restaurants);
             });
         }
+    }
+
+    showRestaurants(restaurant) {
+        this.main.replaceChildren();
+        this.main.insertAdjacentHTML('beforeend', `
+        <div class="px-4 py-5 my-5 text-center">
+        <img class="d-block mx-auto mb-4" src="../img/restaurante.jpg" alt="restaurante" width="50%" height="50%">
+        <h1 class="display-5 fw-bold text-body-emphasis">${restaurant.name}</h1>
+        <div class="col-lg-6 mx-auto">
+          <p class="lead mb-4">${restaurant.description}</p>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+            <button type="button" class="btn btn-primary btn-lg px-4 gap-3">Ubicación</button>
+            <button type="button" class="btn btn-outline-secondary btn-lg px-4">Reseñas</button>
+          </div>
+        </div>
+      </div>
+        `);
     }
 
     //Platos
