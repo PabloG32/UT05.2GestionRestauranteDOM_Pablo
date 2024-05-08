@@ -7,23 +7,13 @@ class RestaurantController {
         this[VIEW] = viewRestaurant;
 
         this.onLoad();
+
         // Eventos iniciales del Controlador
         this.onInit();
-
-        // Enlazamos handlers con la vista
-        //this[VIEW].bindInit(this.handleInit);
+        this[VIEW].bindInit(this.handleInit);
 
     }
     onInit = () => {
-        // this[VIEW].init();
-        //this[VIEW].showCategories(this[MODEL].categories);
-    };
-
-    handleInit = () => {
-        this.onInit();
-    }
-
-    onLoad = () => {
         this.createData();
         this.onCategories();
         this.onAllergenes();
@@ -32,12 +22,21 @@ class RestaurantController {
         this.onDishes();
     };
 
+    handleInit = () => {
+        this.onInit();
+    }
+
+    onLoad = () => {
+
+
+    };
+
     onCategories() {
         const categories = this[MODEL].categories;
         this[VIEW].showCategoriesMenu(categories);
         this[VIEW].bindCategoriesMenu(this.handlerShowCategory);
         this[VIEW].showCategories(categories);
-        this[VIEW].bindCategories(this.handlerShowCategory);
+        this[VIEW].bindCategoriesMain(this.handlerShowCategoryDishes);
     }
 
     onAllergenes() {
@@ -153,9 +152,6 @@ class RestaurantController {
 
     handlerShowCategory = (name) => {
         const category = this[MODEL].createCategory(name);
-        //const dishes = this[MODEL].getDishesInCategory(category);
-
-        //this[VIEW].showDishes(dishes);
     }
 
     handlerShowAllergen = (name) => {
@@ -172,6 +168,12 @@ class RestaurantController {
 
     handlerShowDish = (name) => {
         const dish = this[MODEL].createDish(name);
+    }
+
+    handlerShowCategoryDishes = (name) => {
+        const category = this[MODEL].createCategory(name);
+        const dishes = this[MODEL].getDishesInCategory(category);
+        this[VIEW].showDishesInCategory(dishes);
     }
 }
 export default RestaurantController;
