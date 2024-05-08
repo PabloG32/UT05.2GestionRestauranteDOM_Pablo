@@ -636,6 +636,32 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 }
             }
 
+            *getDishesInMenu(menu, ordered) {
+                if (!(menu instanceof Menu)) {
+                    throw new ObjecManagerException('menu', 'Menu');
+                }
+
+                let positionMenu = this.#getMenuPosition(menu.name);
+                if (positionMenu === -1) {
+                    throw new MenuNotExistsException(menu);
+                }
+                let dishes;
+                // Si se proporciona una función de ordenamiento, clona y ordena los platos según esa función
+                if (ordered) {
+                    dishes = [...this.#menus[positionMenu].dishes];
+                    dishes.sort(ordered);
+                } else {
+                    // Si no se proporciona una función de ordenamiento, simplemente obtiene los platos del menú
+                    dishes = this.#menus[positionMenu].dishes;
+                }
+                // Devuelve los platos en un array en lugar de usar un generador
+                // Genera cada plato en la categoría
+                for (let dish of dishes) {
+                    yield dish;// Devuelve el plato actual
+                }
+            }
+
+
             // Obtiene un iterador con los platos que tienen un determinado alérgeno.
             // El iterador puede estar ordenado.
             *getDishesWithAllergen(allergen, ordered) {
@@ -647,26 +673,22 @@ let RestaurantsManager = (function () { //La función anónima devuelve un méto
                 if (positionAllergen === -1) {
                     throw new AllergenNotExistException(allergen);
                 }
-
-                let dishes = [];
-                for (let dish of this.#dishes) {
-                    if (dish.allergenes.includes(this.#allergenes[positionAllergen])) {
-                        dishes.push(dish);
-                    }
-                }
-
+                let dishes;
+                // Si se proporciona una función de ordenamiento, clona y ordena los platos según esa función
                 if (ordered) {
+                    dishes = [...this.#allergenes[positionAllergen].dishes];
                     dishes.sort(ordered);
+                } else {
+                    // Si no se proporciona una función de ordenamiento, simplemente obtiene los platos del menú
+                    dishes = this.#allergenes[positionAllergen].dishes;
                 }
-
-                return {
-                    [Symbol.iterator]: function* () {
-                        for (let dish of dishes) {
-                            yield dish;
-                        }
-                    }
-                };
+                // Devuelve los platos en un array en lugar de usar un generador
+                // Genera cada plato en la categoría
+                for (let dish of dishes) {
+                    yield dish;// Devuelve el plato actual
+                }
             }
+
 
             //Obtiene un iterador que cumpla un criterio concreto en base a una función de callback. El iterador puede estar ordenado.
             *findDishes(filter, ordered) {

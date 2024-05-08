@@ -70,11 +70,11 @@ class RestaurantController {
             categories: [
                 {
                     name: 'Entrantes', description: 'Deliciosos platos para abrir el apetito antes de la comida principal.',
-                    dishes: ['Ensalada_César', 'Croquetas_de_jamón', 'Nachos', 'Patatas']
+                    dishes: ['Ensalada', 'Croquetas', 'Nachos', 'Patatas']
                 },
                 {
                     name: 'Platos principales', description: 'Sabrosos platos que satisfacen el hambre y deleitan el paladar.',
-                    dishes: ['Paella_de_marisco', 'Pasta', 'Sopa', 'Gazpacho']
+                    dishes: ['Paella', 'Pasta', 'Sopa', 'Gazpacho']
                 },
                 {
                     name: 'Platos segundos', description: 'Exquisitas opciones para aquellos que desean algo más sustancial después del plato principal.',
@@ -83,16 +83,37 @@ class RestaurantController {
             ],
 
             allergenes: [
-                { name: 'Gluten', description: 'Proteína presente en cereales como trigo, cebada y centeno, que puede causar reacciones adversas en personas con intolerancia al gluten.' },
-                { name: 'Lácteos', description: 'Productos derivados de la leche de vaca, oveja o cabra, que pueden provocar reacciones alérgicas en algunas personas.' },
-                { name: 'Crustáceos', description: 'Mariscos como camarones, langostinos y cangrejos, que pueden desencadenar alergias alimentarias en ciertas personas.' },
-                { name: 'Huevos', description: 'Alimento comúnmente utilizado en la cocina que puede desencadenar alergias en algunas personas, especialmente en la clara de huevo.' }
+                {
+                    name: 'Gluten', description: 'Proteína presente en cereales como trigo, cebada y centeno, que puede causar reacciones adversas en personas con intolerancia al gluten.',
+                    dishes: ['Ensalada', 'Croquetas']
+                },
+                {
+                    name: 'Lácteos', description: 'Productos derivados de la leche de vaca, oveja o cabra, que pueden provocar reacciones alérgicas en algunas personas.',
+                    dishes: ['Paella', 'Pasta']
+                },
+                {
+                    name: 'Crustáceos', description: 'Mariscos como camarones, langostinos y cangrejos, que pueden desencadenar alergias alimentarias en ciertas personas.',
+                    dishes: ['Sopa', 'Gazpacho']
+                },
+                {
+                    name: 'Huevos', description: 'Alimento comúnmente utilizado en la cocina que puede desencadenar alergias en algunas personas, especialmente en la clara de huevo.',
+                    dishes: ['Nachos', 'Patatas']
+                }
             ],
 
             menus: [
-                { name: 'Menú del día 1', description: 'Una selección variada de platos diseñados para satisfacer tus papilas gustativas y mantener tu energía durante el día.' },
-                { name: 'Menú del día 2', description: 'Platos cuidadosamente elaborados con ingredientes frescos y de temporada para una experiencia culinaria única.' },
-                { name: 'Menú del día 3', description: 'Disfruta de una combinación equilibrada de sabores y texturas en nuestro tercer menú del día, preparado con esmero para tu deleite.' }
+                {
+                    name: 'Menú del día 1', description: 'Una selección variada de platos diseñados para satisfacer tus papilas gustativas y mantener tu energía durante el día.',
+                    dishes: ['Ensalada', 'Paella', 'Solomillo']
+                },
+                {
+                    name: 'Menú del día 2', description: 'Platos cuidadosamente elaborados con ingredientes frescos y de temporada para una experiencia culinaria única.',
+                    dishes: ['Croquetas', 'Pasta', 'Dorada']
+                },
+                {
+                    name: 'Menú del día 3', description: 'Disfruta de una combinación equilibrada de sabores y texturas en nuestro tercer menú del día, preparado con esmero para tu deleite.',
+                    dishes: ['Nachos', 'Sopa', 'Lagarto']
+                }
             ],
 
             restaurants: [
@@ -102,11 +123,11 @@ class RestaurantController {
             ],
 
             dishes: [
-                { name: 'Ensalada_César', description: 'Mezcla de lechugas, pollo, crutones y aderezo César', ingredients: ["lechugas", "pollo", "crutones", "aderezo César"], image: '../img/ensaladaCesar.jpg' },
-                { name: 'Croquetas_de_jamón', description: 'Croquetas caseras de jamón ibérico', ingredients: ["jamón ibérico"], image: '../img/croquetasJamon.jpg' },
+                { name: 'Ensalada', description: 'Mezcla de lechugas, pollo, crutones y aderezo César', ingredients: ["lechugas", "pollo", "crutones", "aderezo César"], image: '../img/ensaladaCesar.jpg' },
+                { name: 'Croquetas', description: 'Croquetas caseras de jamón ibérico', ingredients: ["jamón ibérico"], image: '../img/croquetasJamon.jpg' },
                 { name: 'Nachos', description: 'Nachos con guacamole', ingredients: ["nachos", "guacamole"], image: '../img/nachos.jpeg' },
                 { name: 'Patatas', description: 'Patatas con huevo y jamon', ingredients: ["patatas", "huevo", "jamón"], image: '../img/patatas.jpg' },
-                { name: 'Paella_de_marisco', description: 'Paella con mariscos frescos', ingredients: ["paella", "mariscos frescos"], image: '../img/paellaMarisco.jpg' },
+                { name: 'Paella', description: 'Paella con mariscos frescos', ingredients: ["paella", "mariscos frescos"], image: '../img/paellaMarisco.jpg' },
                 { name: 'Pasta', description: 'Macarrones boloñesa', ingredients: ["pasta", "carne picada", "salsa de tomate", "queso rallado"], image: '../img/pasta.jpg' },
                 { name: 'Sopa', description: 'Sopa de verdura', ingredients: ["verduras", "caldo"], image: '../img/sopa.jpg' },
                 { name: 'Gazpacho', description: 'Gazpacho andaluz', ingredients: ["tomate", "pepino", "pimiento", "cebolla", "ajo", "vinagre", "aceite de oliva", "sal"], image: '../img/gazpacho.jpeg' },
@@ -135,12 +156,26 @@ class RestaurantController {
         }
 
         for (const allergen of data.allergenes) {
-            this[MODEL].addAllergen(this[MODEL].createAllergen(allergen.name, allergen.description));
+            const storedAllergen = this[MODEL].createAllergen(allergen.name, allergen.description)
+            this[MODEL].addAllergen(storedAllergen);
+            if (allergen.dishes) {
+                for (const dish of allergen.dishes) {
+                    const storedDish = this[MODEL].createDish(dish);
+                    this[MODEL].assignAllergenToDish(storedDish, storedAllergen)
+                }
+            }
 
         }
 
         for (const menu of data.menus) {
-            this[MODEL].addMenu(this[MODEL].createMenu(menu.name, menu.description));
+            const storedMenu = this[MODEL].createMenu(menu.name, menu.description);
+            this[MODEL].addMenu(storedMenu);
+            if (menu.dishes) {
+                for (const dish of menu.dishes) {
+                    const storedDish = this[MODEL].createDish(dish);
+                    this[MODEL].assignDishToMenu(storedMenu, storedDish);
+                }
+            }
 
         }
 
@@ -156,10 +191,14 @@ class RestaurantController {
 
     handlerShowAllergen = (name) => {
         const allergen = this[MODEL].createAllergen(name);
+        const dishes = this[MODEL].getDishesWithAllergen(allergen);
+        this[VIEW].showAllergenesDish(dishes);
     }
 
     handlerShowMenu = (name) => {
         const menu = this[MODEL].createMenu(name);
+        const dishes = this[MODEL].getDishesInMenu(menu);
+        this[VIEW].showDishesInMenu(dishes);
     }
 
     handlerShowRestaurant = (name) => {
