@@ -14,7 +14,6 @@ class RestaurantController {
 
     }
     onInit = () => {
-        this.createData();
         this.onCategories();
         this.onAllergenes();
         this.onMenus();
@@ -27,7 +26,7 @@ class RestaurantController {
     }
 
     onLoad = () => {
-
+        this.createData();
 
     };
 
@@ -208,6 +207,7 @@ class RestaurantController {
 
     handlerShowDish = (name) => {
         const dish = this[MODEL].createDish(name);
+        this[VIEW].showDishesMain(dish);
     }
 
     handlerShowCategoryDishes = (name) => {

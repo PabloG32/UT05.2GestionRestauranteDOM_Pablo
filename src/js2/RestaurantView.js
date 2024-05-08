@@ -21,10 +21,6 @@ class RestauranteView {
         document.getElementById('init').addEventListener('click', (event) => {
             handler();
         });
-        // document.getElementById('logo').addEventListener('click', (event) => {
-        //     handler();
-        // });
-
     }
 
     //Categories
@@ -190,11 +186,33 @@ class RestauranteView {
     }
 
     bindDishesMenu(handler) {
-        for (const li of this.dishesMenu.children) {
-            li.firstElementChild.addEventListener('click', (event) => {
-                handler(event.currentTarget.dataset.dish);
+        for (const a of this.dishesMenu.children) {
+            a.firstElementChild.addEventListener('click', (event) => {
+                handler(event.currentTarget.dataset.dishes);
             });
         }
+    }
+
+    showDishesMain(dish) {
+        this.main.replaceChildren();
+        this.main.insertAdjacentHTML('beforeend', `
+            <div class="container px-4 py-5" id="featured-3">
+            <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+                <div class="feature col">
+                    <div
+                        class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-primary bg-gradient fs-2 mb-3">
+                        <svg class="bi" width="1em" height="1em">
+                            <img src="${dish.image}" alt="${dish.name}" width="100%" height="100%">
+                        </svg>
+                    </div>
+                    <h3 class="fs-2 text-body-emphasis">${dish.name}</h3>
+                    <p>${dish.description}.</p>
+                </div>
+            </div>
+        </div>
+            
+        `)
+
     }
 
     showDishes(dishes) {
